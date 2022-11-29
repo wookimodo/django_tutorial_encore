@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>메모 남기기</h1>
+  <ul>
+    {% for article in latest_article_list %}
+    <li> <a href="/view_detail/{{ article.id }}"> {{ article.title }} </a> |
+    {{ article.name }} | {{ article.cdate|date:"Y년 M d일 D"}} </li>
+    {% endfor %}
+  </ul>
+  <button type="button" onclick="location.href='/write' ">메모하기</button>
+
+</body>
+</html>

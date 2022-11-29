@@ -27,3 +27,8 @@ def viewDetail(request, num=1):
   article_detail = Article.objects.get(id=num)
   # article_detail = get_object_or_404(Article, id=num)
   return render(request, 'view_detail.html', {'article_detail': article_detail})
+
+def index(request):
+  article_len = len(Article.objects.all())
+  latest_article_list = Article.objects.all().order_by('cdate')[article_len-3:article_len]
+  return render(request, 'index.html', {'latest_article_list': latest_article_list})
