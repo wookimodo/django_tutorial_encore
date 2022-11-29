@@ -7,10 +7,11 @@
   <title>Document</title>
 </head>
 <body>
-  <p>이름 | 제목 | 작성 날짜</p>
+  <h1>이름 | 제목 | 작성 날짜</h1>
   <ul>
     {% for article in article_list %}
-    <li> {{ article.title }} | {{ article.name }} | {{ article.cdate|date:"Y년 M d일 D"}} </li>
+    <li> <a href="/view_detail/{{ article.id }}"> {{ article.title }} </a> |
+    {{ article.name }} | {{ article.cdate|date:"Y년 M d일 D"}} </li>
     {% endfor %}
   </ul>
 </body>
