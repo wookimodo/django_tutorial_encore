@@ -1,0 +1,14 @@
+{% extends 'partials/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+메모 작성
+{% endblock title %}
+{% block content %}
+<form action="" method="post">
+  <table>
+    {{ form | crispy}} {% csrf_token %}
+  </table>
+  <button type="submit">확인</button>
+</form>
+
+{% endblock content %}
