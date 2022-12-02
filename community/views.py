@@ -2,7 +2,11 @@ from django.shortcuts import render
 from .forms import Form
 from .models import Article
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django_tutorial.views import OwnerOnlyMixin
+
+
 
 # Create your views here.
 # def write(request):
@@ -40,8 +44,12 @@ class WriteFormView(CreateView):
   model = Article
   fields = ['name', 'title', 'contents', 'url', 'email']
   template_name = 'community/write.html'
-  success_url = reverse_lazy('community:article_list')
+  success_url = reverse_lazy('community:list')
+  
+  # 여기서의 form은 사용자가 입력한 form
   def form_valid(self, form):
+    # 로그인되어 있는 user가 owner로 넘어가서 자동적으로 저장되기하기 위해서. user가 자기 id를 직접 입력하지는 않기 때문에.
+    form.instance.owner = self.request.user
     return super().form_valid(form)
   
 class ArticleListView(ListView):
@@ -51,3 +59,22 @@ class ArticleListView(ListView):
 class ArticleDetailView(DetailView):
   model = Article
   template_name = 'community/view_detail.html'
+  
+# 변경(login user 자료만 list_up)
+class ArticleChangeView(LoginRequiredMixin, ListView):
+  template_name = 'community/change_list.html'
+  def get_queryset(self):
+    return Article.objects.filter(owner=self.request.user)
+  
+# 로그인 user 메모 수정(Update) 
+class ArticleUpdateView(OwnerOnlyMixin, UpdateView):
+  model = Article
+  template_name = 'community/article_update.html'
+  fields = ['name', 'title', 'contents', 'url', 'email']
+  success_url = reverse_lazy('community:change_list')
+  
+# 로그인 user 메모 삭제(Delete)
+class ArticleDeleteView(OwnerOnlyMixin, DeleteView):
+  model = Article
+  template_name = 'community/article_delete.html'
+  success_url = reverse_lazy('community:change_list')

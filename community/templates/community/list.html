@@ -1,13 +1,29 @@
-{% extends 'partials/base.html' %}
-{% block title %}
-메모 목록
-{% endblock title %}
+{% extends "partials/base.html" %}
+{% load static %}
+{% block title %}글작성 목록{% endblock %}
+
+{% block part_style %}
+<link rel="stylesheet" href="{% static 'css/list.css' %}">
+{% endblock %}
 {% block content %}
-    <p>이름 | 제목 | 작성 날짜</p>
-        <ul>
-            {% for article in article_list %}
-                <li> <a href="/community/view_detail/{{ article.id }}">{{ article.title }}</a> | {{ article.name }} | {{ article.cdate|date:"Y년 M d일 D" }} | </li>
-            {% endfor %} <!--endfor로 for문을 꼭 닫아줘야됨-->
-        </ul>
-        <a href="/community/write">메모하기</a>
+  <div class="article_box">
+    <p>
+      <table>
+        <tr>
+          <th>제목</th>
+          <th>이름</th>
+          <th>작성 날짜</th>
+          <th></th>
+          <th></th>
+        </tr>
+        {% for article in object_list %}
+        <tr>
+          <td><a href="{% url 'community:view_detail' article.id %}">{{ article.title }}</a></td>
+          <td>{{ article.name }}</td>
+          <td>{{ article.cdate|date:"Y년 M d일 D" }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+  </div>
+  <p><a href="{% url 'community:change_list' %}">변경 가능 리스트</a>&nbsp;&nbsp;<a href="{% url 'community:write' %}">메모글 작성</a></p>
 {% endblock content %}

@@ -1,35 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>상세보기!!!!</h1>
+{% extends "partials/base.html" %}
+{% block title %}{{ object.pk }}번글 세부내용{% endblock %}
+
+{% block content %}
+<div>
   <table>
     <tr>
-      <td>no</td>
-      <td>{{ article.pk}}</td>
+      <th>no</th>
+      <td>{{ object.pk }}</td>
     </tr>
     <tr>
-      <td>제목</td>
-      <td>{{ article.title }} </td>
+      <th>제목</th>
+      <td>{{ object.title}}</td>
     </tr>
     <tr>
-      <td>저자</td>
-      <td>{{ article.name }} </td>
+      <th>작성자</th>
+      <td>{{ object.name}}</td>
     </tr>
     <tr>
-      <td>내용</td>
-      <td>{{ article.contents }} </td>
+      <th>내용</th>
+      <td>{{ object.contents }}</td>
     </tr>
     <tr>
-      <td>Email</td>
-      <td>{{ article.email }}</td>
+      <th></th>
+      <td>{{ object.url }}/td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>{{ object.email }}</td>
+    </tr>
+    <tr>
+      <th></th>
+      <td>{{ object.cdate }}</td>
     </tr>
   </table>
-    
-</body>
-</html>
+</div>
+<div>
+<br>
+<button><a href="{% url 'community:article_update' object.id %}">수정</a></button>
+<button><a href="{% url 'community:article_delete' object.id %}">삭제</a></button>
+
+</div>
+  {% endblock content %}
