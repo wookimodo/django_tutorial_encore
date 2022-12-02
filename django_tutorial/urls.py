@@ -15,11 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from community.views import write, articleList, viewDetail, index
+from community.views import index
+from .views import UserCreateView, UserCreateDoneTV
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('community/',include('community.urls')),
     path('', index, name='index'),
     path('dashboard/', include('dashboard.urls')),
+    # django.contrib.auth.urls 장고 내장 인증 urls 활용
+    path('accounts/', include('django.contrib.auth.urls')),
+    # 가입처리
+    path('accounts/register/', UserCreateView.as_view(), name='register'),
+    # 계정생성이 완료됐다는 메시지를 보여줌
+    path('accounts/register/done/', UserCreateDoneTV.as_view(), name='register_done'), 
 ]

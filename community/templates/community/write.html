@@ -4,6 +4,7 @@
 메모 작성
 {% endblock title %}
 {% block content %}
+
 <form action="" method="post">
   <table>
     {{ form | crispy}} {% csrf_token %}

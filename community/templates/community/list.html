@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>이름 | 제목 | 작성 날짜</h1>
-  <ul>
-    {% for article in article_list %}
-    <li> <a href="/view_detail/{{ article.id }}"> {{ article.title }} </a> |
-    {{ article.name }} | {{ article.cdate|date:"Y년 M d일 D"}} </li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+{% extends 'partials/base.html' %}
+{% block title %}
+메모 목록
+{% endblock title %}
+{% block content %}
+    <p>이름 | 제목 | 작성 날짜</p>
+        <ul>
+            {% for article in article_list %}
+                <li> <a href="/community/view_detail/{{ article.id }}">{{ article.title }}</a> | {{ article.name }} | {{ article.cdate|date:"Y년 M d일 D" }} | </li>
+            {% endfor %} <!--endfor로 for문을 꼭 닫아줘야됨-->
+        </ul>
+        <a href="/community/write">메모하기</a>
+{% endblock content %}
