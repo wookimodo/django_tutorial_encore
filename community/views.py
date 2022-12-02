@@ -40,7 +40,7 @@ def index(request):
   latest_article_list = Article.objects.all().order_by('cdate')[article_len-3:article_len]
   return render(request, 'index.html', {'latest_article_list': latest_article_list})
 
-class WriteFormView(CreateView):
+class WriteFormView(LoginRequiredMixin, CreateView):
   model = Article
   fields = ['name', 'title', 'contents', 'url', 'email']
   template_name = 'community/write.html'
